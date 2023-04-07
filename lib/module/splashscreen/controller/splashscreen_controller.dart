@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mobile_apps/module/products/view/products_view.dart';
-import '../view/splashscreen_view.dart';
+import 'package:mobile_apps/core.dart';
 
 class SplashscreenController extends GetxController {
   SplashscreenView? view;
@@ -8,7 +7,7 @@ class SplashscreenController extends GetxController {
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Get.offAll(const ProductsView());
+      Get.offAll(const DashboardView());
     });
     super.onInit();
   }

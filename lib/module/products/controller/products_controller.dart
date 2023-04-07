@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
+import 'package:mobile_apps/custom/formatchanger.dart';
 import '../view/products_view.dart';
 
 class ProductsController extends GetxController {
@@ -9,10 +10,13 @@ class ProductsController extends GetxController {
   final qntyTrolly = RxInt(0);
   final orders = RxList<Widget>([]);
   final order = RxList<Product>([]);
+  final detailPesanan = RxList<Widget>([]);
   final products = RxList([]);
   final navBarHeight = RxDouble(60);
-  final total = RxDouble(0);
-  final totalBayar = RxDouble(0);
+  final total = RxInt(0);
+  final totalBayar = RxInt(0);
+  final kembalian = RxInt(0);
+  final uangBayar = RxInt(0);
   final noImage = RxString(
       "https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png");
 
@@ -31,6 +35,10 @@ class ProductsController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
+
+  calculate() {
+    kembalian.value = uangBayar.value - total.value;
+  }
 
   getProducts() async {
     try {
@@ -72,7 +80,7 @@ class ProductsController extends GetxController {
     Product product = Product(
         id: RxString(id),
         name: RxString(name),
-        price: RxDouble(double.parse(price)),
+        price: RxInt(int.parse(price)),
         quantity: RxInt(1),
         picture: RxString(picture));
 
@@ -169,6 +177,81 @@ class ProductsController extends GetxController {
     }
   }
 
+  getDetailPesanan() {
+    detailPesanan.value = [];
+    for (var i = 0; i < order.length; i++) {
+      detailPesanan.add(
+        Column(
+          children: [
+            Card(
+              elevation: 2,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                order[i].picture.value,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        SizedBox(
+                          height: 50,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                order[i].name.value,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Rp. ${FormatChanger().separator(order[i].price.value.toString())}",
+                                    style: TextStyle(
+                                      color: Colors.blue.shade800,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "/Porsi",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Text("x${order[i].quantity.value}"),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   addTrolly() {
     qntyTrolly.value++;
   }
@@ -204,7 +287,7 @@ class ProductsController extends GetxController {
 class Product {
   var id = RxString("");
   var name = RxString("");
-  var price = RxDouble(0);
+  var price = RxInt(0);
   var quantity = RxInt(0);
   var picture = RxString("");
 

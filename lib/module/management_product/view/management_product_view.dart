@@ -1,14 +1,15 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../controller/management_product_controller.dart';
 import 'package:mobile_apps/core.dart';
+import 'package:get/get.dart';
 
-class ProductsView extends StatelessWidget {
-  const ProductsView({Key? key}) : super(key: key);
+class ManagementProductView extends StatelessWidget {
+  const ManagementProductView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProductsController>(
-      init: ProductsController(),
+    return GetBuilder<ManagementProductController>(
+      init: ManagementProductController(),
       builder: (controller) {
         controller.view = this;
 
@@ -41,33 +42,20 @@ class ProductsView extends StatelessWidget {
             ),
           ),
           body: SingleChildScrollView(
-              child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: const ProductList(),
-          )),
-          bottomNavigationBar: const BottomNavigateWidget(),
-          floatingActionButton: SizedBox(
-            height: 20,
-            width: 20,
-            child: FittedBox(
-              child: FloatingActionButton(
-                backgroundColor: Colors.blue[900],
-                onPressed: () {
-                  if (controller.navBarHeight.value == 60) {
-                    controller.navBarHeight.value = 300;
-                  } else {
-                    controller.navBarHeight.value = 60;
-                  }
-                },
-                child: const Icon(
-                  Icons.keyboard_arrow_up_sharp,
-                  size: 50,
-                ),
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: const [],
               ),
             ),
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.blue.shade800,
+            child: const Icon(Icons.add),
+            onPressed: () {
+              Get.to(const FormProductView());
+            },
+          ),
         );
       },
     );
