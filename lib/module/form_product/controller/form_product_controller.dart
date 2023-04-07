@@ -1,22 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/instance_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:image_picker/image_picker.dart';
-import '../view/form_product_view.dart';
+import 'package:mobile_apps/core.dart';
 
 class FormProductController extends GetxController {
   FormProductView? view;
-    final id = RxString("");
-  final customer_id = RxString("CUST001");
-  final customer_name = RxString("");
-  final card_identity = RxString("");
-  final hp = RxString("");
-  final address = RxString("");
+  final productCode = RxString("");
+  final productName = RxString("");
+  final price = RxString("");
   final image_url = RxString("");
   final created_by = RxString("mroni");
   final created_date = DateTime.now();
   XFile? imagen;
   final foto = RxString("");
   final edit = RxBool(false);
+  final urlSementara = RxString(
+      "https://t-2.tstatic.net/palembang/foto/bank/images/Resep-sate-Padang.jpg");
 
   // @override
   // void onInit() {
@@ -86,5 +88,44 @@ class FormProductController extends GetxController {
     );
   }
 
-  
+  static Future<dynamic> doSave(BuildContext context, var data) async {
+    var c = Get.put(ManagementProductController());
+    String url = "https://apigenerator.dronahq.com/api/g7s7P925/TestAlan";
+    BaseOptions options = BaseOptions(
+      baseUrl: url,
+      connectTimeout: const Duration(milliseconds: 60000),
+      receiveTimeout: const Duration(milliseconds: 30000),
+    );
+
+    Dio dio = Dio(options);
+    Response response = await dio.post(url, data: data);
+    try {
+      if (response.statusCode == 201) {
+        Get.back();
+        Get.snackbar(
+          "Success",
+          "Save data success ",
+          backgroundColor: Colors.white,
+          colorText: Colors.blue[800],
+        );
+        c.getProducts();
+      } else {
+        Get.snackbar(
+          "Sorry",
+          "Save data failed",
+          backgroundColor: Colors.white,
+          colorText: Colors.red[800],
+        );
+        return null;
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Sorry",
+        "Connection problem",
+        backgroundColor: Colors.white,
+        colorText: Colors.red[800],
+      );
+      return null;
+    }
+  }
 }

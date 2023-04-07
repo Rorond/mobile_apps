@@ -91,8 +91,7 @@ class FormProductView extends StatelessWidget {
                       ),
                       labelText: "Product Code",
                     ),
-                    onChanged: (value) =>
-                        controller.customer_name.value = value,
+                    onChanged: (value) => controller.productCode.value = value,
                   ),
                   const SizedBox(height: 20),
                   TextField(
@@ -102,7 +101,7 @@ class FormProductView extends StatelessWidget {
                       ),
                       labelText: "Product Name",
                     ),
-                    onChanged: (value) => controller.hp.value = value,
+                    onChanged: (value) => controller.productName.value = value,
                   ),
                   const SizedBox(height: 20),
                   TextField(
@@ -113,7 +112,7 @@ class FormProductView extends StatelessWidget {
                       ),
                       labelText: "Price",
                     ),
-                    onChanged: (value) => controller.address.value = value,
+                    onChanged: (value) => controller.price.value = value,
                   ),
                   const SizedBox(height: 30.0),
                 ],
@@ -137,10 +136,15 @@ class FormProductView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // controller.doSave();
-                  // controller.edit.value.obs == true
-                  //     ? controller.doUpdate(controller.id.value)
-                  //     : controller.doSave();
+                  var data = {
+                    "food_code": controller.productCode.value,
+                    "name": controller.productName.value,
+                    "picture": controller.urlSementara.value,
+                    "picture_ori": "",
+                    "price": controller.price.value,
+                    "created_at": "2022-01-07 14:16:56"
+                  };
+                  FormProductController.doSave(context, data);
                 },
               ),
             ),

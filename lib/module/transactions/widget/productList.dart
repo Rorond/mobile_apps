@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_apps/core.dart';
 
+import '../../../custom/formatchanger.dart';
+
 class ProductList extends StatelessWidget {
   const ProductList({super.key});
 
@@ -65,7 +67,7 @@ class ProductList extends StatelessWidget {
                                 Text(
                                   controller.products[index]['price'] == null
                                       ? "Rp. 0"
-                                      : "Rp. ${controller.products[index]['price']}",
+                                      : "Rp. ${FormatChanger().separator(controller.products[index]['price'])}",
                                   style: const TextStyle(
                                     fontSize: 13.0,
                                     fontWeight: FontWeight.bold,

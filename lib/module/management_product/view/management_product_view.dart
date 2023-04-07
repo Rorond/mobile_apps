@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../controller/management_product_controller.dart';
+import 'package:mobile_apps/module/management_product/widget/productslist.dart';
 import 'package:mobile_apps/core.dart';
 import 'package:get/get.dart';
 
@@ -44,9 +44,7 @@ class ManagementProductView extends StatelessWidget {
           body: SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: const [],
-              ),
+              child: const ProductListWidget(),
             ),
           ),
           floatingActionButton: FloatingActionButton(

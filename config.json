@@ -1,10 +1,10 @@
 {
-  "openai_key": "",
-  "modules": [
-    "splashscreen",
-    "products",
-    "dashboard",
-    "form_product",
-    "management_product"
-  ]
+    "openai_key": "",
+    "modules": [
+        "splashscreen",
+        "products",
+        "dashboard",
+        "form_product",
+        "management_product"
+    ]
 }
